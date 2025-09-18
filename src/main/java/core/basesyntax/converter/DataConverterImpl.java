@@ -26,7 +26,8 @@ public class DataConverterImpl implements DataConverter {
                         "Invalid quantity in line: " + line);
             }
 
-            FruitTransaction.Operation operation = FruitTransaction.Operation.getOperation(operationCode);
+            FruitTransaction.Operation operation =
+                    FruitTransaction.Operation.getOperation(operationCode);
             transactions.add(new FruitTransaction(operation, fruit, quantity));
         }
         return transactions;
