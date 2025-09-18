@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class FileReaderImplTest {
-
-
     private static FileReaderImpl fileReader;
     private static final String PATH_TO_REPORT_READ =
             "src/main/resources/reportToRead.csv";
@@ -39,17 +37,17 @@ class FileReaderImplTest {
 
     @Test
     void read_existingFile_ok() throws IOException {
-       List<String> expected = new ArrayList<>();
-       expected.add(type,fruit,quantity);
-       expected.add(b,banana,20);
-       expected.add(b,apple,100);
-       expected.add(s,banana,100);
-       expected.add(p,banana,13);
-       expected.add (r,apple,10);
-       expected.add(p,apple,20);
-       expected.add(p,banana,5);
-       expected.add(s,banana,50);
-       List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
-       Assert.assertEquals(expected, actual);
-        }
+        List<String> expected = new ArrayList<>();
+        expected.add("type,fruit,quantity");
+        expected.add("b,banana,20");
+        expected.add("b,apple,100");
+        expected.add("s,banana,100");
+        expected.add("p,banana,13");
+        expected.add("r,apple,10");
+        expected.add("p,apple,20");
+        expected.add("p,banana,5");
+        expected.add("s,banana,50");
+        List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
+        Assert.assertEquals(expected, actual);
     }
+}
