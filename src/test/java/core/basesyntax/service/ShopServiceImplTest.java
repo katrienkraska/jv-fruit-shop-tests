@@ -46,4 +46,12 @@ class ShopServiceImplTest {
                 "Inventory should remain empty when processing an empty transaction list",
                 inventory.isEmpty());
     }
+
+    @Test
+    void process_transactionWithNegativeQuantity_throwsException() {
+        FruitTransaction transaction =
+                new FruitTransaction(FruitTransaction.Operation.BALANCE, "apple", -5);
+        Assert.assertThrows(RuntimeException.class,
+                () -> shopService.process(List.of(transaction)));
+    }
 }

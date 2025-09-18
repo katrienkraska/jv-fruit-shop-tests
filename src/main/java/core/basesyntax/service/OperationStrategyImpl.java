@@ -18,10 +18,12 @@ public class OperationStrategyImpl implements OperationStrategy {
 
     @Override
     public OperationHandler getHandler(FruitTransaction.Operation operation) {
+        if (operation == null) {
+            throw new IllegalArgumentException("Operation cannot be null");
+        }
         OperationHandler handler = operationHandlers.get(operation);
         if (handler == null) {
-            throw new IllegalArgumentException(
-                    "No handler found for operation: " + operation);
+            throw new IllegalArgumentException("No handler found for operation: " + operation);
         }
         return handler;
     }
