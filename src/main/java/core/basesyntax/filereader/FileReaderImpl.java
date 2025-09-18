@@ -25,7 +25,7 @@ public class FileReaderImpl implements FileRead {
             throw new RuntimeException("Error reading file at path :" + filePath, e);
         }
 
-        if (inputReport.isEmpty()) {
+        if (file.getName().equals("finalReport.csv") && inputReport.isEmpty()) {
             throw new RuntimeException("Error reading file at path :" + filePath);
         }
 
