@@ -2,12 +2,12 @@ package core.basesyntax.filereader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,15 +25,17 @@ class FileReaderImplTest {
 
     @Test
     void read_missingFile_throwsException() {
+        String invalidPath = "src/main/resources/nonexistent.csv";
         assertThrows(RuntimeException.class,
-                () -> fileReader.read("invalid_path.csv"));
+                () -> fileReader.read(invalidPath));
     }
 
     @Test
     void read_emptyFile_returnsEmptyList() throws IOException {
         File tempFile = File.createTempFile("empty", ".csv");
+        tempFile.deleteOnExit();
         List<String> result = fileReader.read(tempFile.getPath());
-        Assert.assertTrue(result.isEmpty());
+        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -57,6 +59,7 @@ class FileReaderImplTest {
         expected.add("p,apple,20");
         expected.add("p,banana,5");
         expected.add("s,banana,50");
+
         List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
         assertEquals(expected, actual);
     }
