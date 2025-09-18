@@ -22,4 +22,18 @@ class FileWriterImplTest {
         Assert.assertThrows(RuntimeException.class, () ->
                 fileWriter.write("data", "invalid/path.csv"));
     }
+
+    @Test
+    void write_fileWithoutPermission_throwsException() throws Exception {
+        File tempFile = File.createTempFile("restricted", ".csv");
+        tempFile.setWritable(false);
+
+        try {
+            Assert.assertThrows(RuntimeException.class,
+                    () -> fileWriter.write("data", tempFile.getPath()));
+        } finally {
+            tempFile.setWritable(true);
+            tempFile.deleteOnExit();
+        }
+    }
 }

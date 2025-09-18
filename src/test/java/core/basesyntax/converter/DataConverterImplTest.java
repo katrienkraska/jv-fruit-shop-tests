@@ -33,4 +33,18 @@ class DataConverterImplTest {
                 Collections.emptyList());
         Assert.assertTrue(result.isEmpty());
     }
+
+    @Test
+    void convertToTransaction_nonNumericQuantity_throwsException() {
+        List<String> input = List.of("b,banana,abc");
+        Assert.assertThrows(RuntimeException.class, () ->
+                dataConverter.convertToTransaction(input));
+    }
+
+    @Test
+    void convertToTransaction_missingFields_throwsException() {
+        List<String> input = List.of("b,banana");
+        Assert.assertThrows(RuntimeException.class, () ->
+                dataConverter.convertToTransaction(input));
+    }
 }
