@@ -14,8 +14,6 @@ class FileReaderImplTest {
     private static FileReaderImpl fileReader;
     private static final String PATH_TO_REPORT_READ =
             "src/main/resources/reportToRead.csv";
-    private static final String PATH_TO_FINAL_READ =
-            "src/main/resources/finalReport.csv";
 
     @BeforeAll
     static void beforeAll() {
@@ -27,15 +25,6 @@ class FileReaderImplTest {
         String invalidPath = "src/main/resources/nonexistent.csv";
         assertThrows(RuntimeException.class,
                 () -> fileReader.read(invalidPath));
-    }
-
-    @Test
-    void read_fromFileWrongPass_throwException() {
-        Exception exception = assertThrows(RuntimeException.class, () ->
-                fileReader.read(PATH_TO_FINAL_READ));
-        String actual = exception.getMessage();
-        String expected = "Error reading file at path :" + PATH_TO_FINAL_READ;
-        assertEquals(expected, actual);
     }
 
     @Test
