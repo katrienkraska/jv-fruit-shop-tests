@@ -19,7 +19,8 @@ class FileReaderImplTest {
 
     @Test
     void read_missingFile_throwsException() {
-        String nonExistentFile = "non_existing_file.csv";
+        String nonExistentFile = "non_existing_file_"
+                + System.currentTimeMillis() + ".csv";
         RuntimeException exception = Assert.assertThrows(RuntimeException.class,
                 () -> fileReader.read(nonExistentFile));
         Assert.assertTrue(exception.getMessage().contains("File not found"));
