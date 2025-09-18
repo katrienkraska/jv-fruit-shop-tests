@@ -28,6 +28,7 @@ public class DataConverterImpl implements DataConverter {
 
             FruitTransaction.Operation operation =
                     FruitTransaction.Operation.getOperation(operationCode);
+
             transactions.add(new FruitTransaction(operation, fruit, quantity));
         }
         return transactions;

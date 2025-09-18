@@ -4,13 +4,14 @@ import core.basesyntax.model.FruitTransaction;
 import java.util.Map;
 
 public class OperationStrategyImpl implements OperationStrategy {
-    private final Map<FruitTransaction.Operation, OperationHandler> operationHandlers;
+    private final Map<FruitTransaction.Operation,
+            OperationHandler> operationHandlers;
 
     public OperationStrategyImpl(Map<FruitTransaction.Operation,
             OperationHandler> operationHandlers) {
-        if (operationHandlers == null) {
+        if (operationHandlers == null || operationHandlers.isEmpty()) {
             throw new IllegalArgumentException(
-                    "OperationHandlers map cannot be null");
+                    "OperationHandlers map cannot be null or empty");
         }
         this.operationHandlers = operationHandlers;
     }

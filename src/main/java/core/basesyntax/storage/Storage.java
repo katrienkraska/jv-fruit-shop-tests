@@ -9,4 +9,8 @@ public class Storage {
     public static Map<String, Integer> getInventory() {
         return inventory;
     }
+
+    public static void clear() {
+        inventory.clear();
+    }
 }
