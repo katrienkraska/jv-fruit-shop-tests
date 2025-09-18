@@ -2,15 +2,20 @@ package core.basesyntax.filereader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
 
 class FileReaderImplTest {
     private static FileReaderImpl fileReader;
     private static final String PATH_TO_REPORT_READ =
             "src/main/resources/reportToRead.csv";
+    private static final String PATH_TO_FINAL_READ =
+            "src/main/resources/finalReport.csv";
 
     @BeforeAll
     static void beforeAll() {
@@ -31,19 +36,27 @@ class FileReaderImplTest {
     }
 
     @Test
+    void read_fromFileWrongPass_throwException() {
+        Exception exception = Assertions.assertThrows(RuntimeException.class, () ->
+                fileReader.read(PATH_TO_FINAL_READ));
+        String actual = exception.getMessage();
+        String expected = "Error reading file at path :" + PATH_TO_FINAL_READ;
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void read_existingFile_ok() throws IOException {
-        List<String> expected = List.of(
-                "type,fruit,quantity",
-                "b,banana,20",
-                "b,apple,100",
-                "s,banana,100",
-                "p,banana,13",
-                "r,apple,10",
-                "p,apple,20",
-                "p,banana,5",
-                "s,banana,50"
-        );
+        List<String> expected = new ArrayList<>();
+        expected.add("type,fruit,quantity");
+        expected.add("b,banana,20");
+        expected.add("b,apple,100");
+        expected.add("s,banana,100");
+        expected.add("p,banana,13");
+        expected.add("r,apple,10");
+        expected.add("p,apple,20");
+        expected.add("p,banana,5");
+        expected.add("s,banana,50");
         List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }
