@@ -15,18 +15,15 @@ public class FileReaderImpl implements FileRead {
         if (!file.exists()) {
             throw new RuntimeException("Error reading file at path :" + filePath);
         }
+
         List<String> inputReport = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                inputReport.add(line.trim());
+                inputReport.add(line.trim()); // прибираємо пробіли на початку та кінці рядка
             }
         } catch (IOException e) {
             throw new RuntimeException("Error reading file at path :" + filePath, e);
-        }
-
-        if (file.getName().equals("finalReport.csv") && inputReport.isEmpty()) {
-            throw new RuntimeException("Error reading file at path :" + filePath);
         }
 
         return inputReport;
