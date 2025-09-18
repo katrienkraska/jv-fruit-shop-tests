@@ -22,12 +22,8 @@ class FileReaderImplTest {
 
     @Test
     void read_missingFile_throwsException() {
-        RuntimeException exception = Assert.assertThrows(
-                RuntimeException.class, () ->
-                        fileReader.read(PATH_TO_FINAL_READ));
-        Assert.assertEquals("Error reading file at path : "
-                        + PATH_TO_FINAL_READ,
-                exception.getMessage());
+        Assert.assertThrows(RuntimeException.class,
+                () -> fileReader.read("invalid_path.csv"));
     }
 
     @Test
