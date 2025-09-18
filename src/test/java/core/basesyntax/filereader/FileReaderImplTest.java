@@ -1,5 +1,6 @@
 package core.basesyntax.filereader;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
@@ -7,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class FileReaderImplTest {
 
     @Test
     void read_missingFile_throwsException() {
-        Assert.assertThrows(RuntimeException.class,
+        assertThrows(RuntimeException.class,
                 () -> fileReader.read("invalid_path.csv"));
     }
 
@@ -38,7 +38,7 @@ class FileReaderImplTest {
 
     @Test
     void read_fromFileWrongPass_throwException() {
-        Exception exception = Assertions.assertThrows(RuntimeException.class, () ->
+        Exception exception = assertThrows(RuntimeException.class, () ->
                 fileReader.read(PATH_TO_FINAL_READ));
         String actual = exception.getMessage();
         String expected = "Error reading file at path :" + PATH_TO_FINAL_READ;
