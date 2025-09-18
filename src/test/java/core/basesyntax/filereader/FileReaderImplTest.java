@@ -1,5 +1,6 @@
 package core.basesyntax.filereader;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
 
 class FileReaderImplTest {
     private static FileReaderImpl fileReader;
