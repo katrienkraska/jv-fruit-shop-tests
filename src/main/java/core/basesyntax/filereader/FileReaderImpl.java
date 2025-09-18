@@ -28,7 +28,7 @@ public class FileReaderImpl implements FileRead {
         if (inputReport.isEmpty()) {
             throw new RuntimeException("Error reading file at path :" + filePath);
         }
+
         return inputReport;
     }
-
 }
