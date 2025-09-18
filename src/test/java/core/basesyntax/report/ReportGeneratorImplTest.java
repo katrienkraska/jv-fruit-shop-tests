@@ -10,9 +10,12 @@ class ReportGeneratorImplTest {
     @Test
     void getReport_validInventory_ok() {
         Map<String, Integer> inventory = Map.of(
-                "apple", 50,"babana", 30);
+                "apple", 50,
+                "banana", 30
+        );
+        String expected = "apple,50\nbanana,30\n";
         String result = reportGenerator.getReport(inventory);
-        Assert.assertEquals("apple,50\nbanana,30\n", result);
+        Assert.assertEquals(expected, result);
     }
 
     @Test

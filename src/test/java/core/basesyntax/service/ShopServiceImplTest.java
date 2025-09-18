@@ -1,6 +1,7 @@
 package core.basesyntax.service;
 
 import core.basesyntax.model.FruitTransaction;
+import core.basesyntax.storage.Storage;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ class ShopServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        Storage.getInventory().clear();
+
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = new HashMap<>();
         operationHandlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
         operationHandlers.put(FruitTransaction.Operation.PURCHASE, new PurchaseOperation());
@@ -28,22 +31,19 @@ class ShopServiceImplTest {
     void process_validTransactions_ok() {
         FruitTransaction transaction = new FruitTransaction(
                 FruitTransaction.Operation.BALANCE, "apple", 50);
-        OperationHandler balanceHandler = new BalanceOperation();
-        OperationStrategy operationStrategy = new OperationStrategyImpl(
-                Map.of(FruitTransaction.Operation.BALANCE, balanceHandler));
-        ShopService shopService = new ShopServiceImpl(operationStrategy);
         shopService.process(List.of(transaction));
-        Assert.assertEquals("apple", 50);
+
+        Map<String, Integer> inventory = ((ShopServiceImpl) shopService).getInventory();
+        Assert.assertEquals(50, inventory.get("apple").intValue());
     }
 
     @Test
     void process_emptyTransactions_noHandlersCalled() {
-        List<FruitTransaction> emptyTransactions = Collections.emptyList();
-        shopService.process(emptyTransactions);
+        shopService.process(Collections.emptyList());
+
         Map<String, Integer> inventory = ((ShopServiceImpl) shopService).getInventory();
-        Assert.assertTrue("Inventory should remain empty "
-                        + "when processing an empty transaction list",
-                inventory.isEmpty()
-        );
+        Assert.assertTrue(
+                "Inventory should remain empty when processing an empty transaction list",
+                inventory.isEmpty());
     }
 }

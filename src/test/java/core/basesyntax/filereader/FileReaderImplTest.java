@@ -2,7 +2,6 @@ package core.basesyntax.filereader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,10 +21,11 @@ class FileReaderImplTest {
 
     @Test
     void read_missingFile_throwsException() {
-        Exception exception = Assert.assertThrows(RuntimeException.class, () ->
-                fileReader.read(PATH_TO_REPORT_READ));
-        String actual = exception.getMessage();
-        String expected = "Error reading file at path : " + PATH_TO_FINAL_READ;
+        String nonExistentFile = "non_existing_file.csv";
+        RuntimeException exception = Assert.assertThrows(RuntimeException.class,
+                () -> fileReader.read(nonExistentFile));
+        Assert.assertTrue(exception.getMessage().contains(
+                "Error reading file at path : " + PATH_TO_FINAL_READ));
     }
 
     @Test
@@ -37,16 +37,17 @@ class FileReaderImplTest {
 
     @Test
     void read_existingFile_ok() throws IOException {
-        List<String> expected = new ArrayList<>();
-        expected.add("type,fruit,quantity");
-        expected.add("b,banana,20");
-        expected.add("b,apple,100");
-        expected.add("s,banana,100");
-        expected.add("p,banana,13");
-        expected.add("r,apple,10");
-        expected.add("p,apple,20");
-        expected.add("p,banana,5");
-        expected.add("s,banana,50");
+        List<String> expected = List.of(
+                "    type,fruit,quantity",
+                "    b,banana,20",
+                "    b,apple,100",
+                "    s,banana,100",
+                "    p,banana,13",
+                "    r,apple,10",
+                "    p,apple,20",
+                "    p,banana,5",
+                "    s,banana,50"
+        );
         List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
         Assert.assertEquals(expected, actual);
     }
