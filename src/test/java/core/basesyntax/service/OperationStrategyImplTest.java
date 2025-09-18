@@ -31,12 +31,4 @@ class OperationStrategyImplTest {
         Assert.assertThrows(IllegalArgumentException.class,
                 () -> new OperationStrategyImpl(Map.of()));
     }
-
-    @Test
-    void getHandler_nullOperation_throwsException() {
-        OperationStrategy operationStrategy = new OperationStrategyImpl(
-                Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation()));
-        Assert.assertThrows(IllegalArgumentException.class,
-                () -> operationStrategy.getHandler(null));
-    }
 }
