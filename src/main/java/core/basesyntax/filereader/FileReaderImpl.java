@@ -1,7 +1,6 @@
 package core.basesyntax.filereader;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,21 +10,16 @@ public class FileReaderImpl implements FileRead {
 
     @Override
     public List<String> read(String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
+        List<String> records = new ArrayList<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                records.add(line.trim());
+            }
+
+        } catch (IOException e) {
             throw new RuntimeException("Error reading file at path :" + filePath);
         }
-
-        List<String> inputReport = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                inputReport.add(line.trim()); // прибираємо пробіли на початку та кінці рядка
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading file at path :" + filePath, e);
-        }
-
-        return inputReport;
+        return records;
     }
 }
