@@ -3,6 +3,7 @@ package core.basesyntax.filereader;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,14 @@ class FileReaderImplTest {
         String actual = exception.getMessage();
         String expected = "Error reading file at path :" + PATH_TO_FINAL_READ;
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void read_emptyFile_returnsEmptyList() throws IOException {
+        File tempFile = File.createTempFile("empty", ".csv");
+        List<String> result = fileReader.read(tempFile.getPath());
+        assertEquals(0, result.size());
+        tempFile.deleteOnExit();
     }
 
     @Test
