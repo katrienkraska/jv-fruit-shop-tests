@@ -66,4 +66,17 @@ class FileReaderImplTest {
         assertEquals(expected, actual);
         tempFile.deleteOnExit();
     }
+
+    @Test
+    void read_fileWithoutPermission_throwsException() throws IOException {
+        File tempFile = File.createTempFile("restricted", ".csv");
+        boolean success = tempFile.setReadable(false);
+
+        try {
+            assertThrows(RuntimeException.class, () -> fileReader.read(tempFile.getPath()));
+        } finally {
+            tempFile.setReadable(true);
+            tempFile.deleteOnExit();
+        }
+    }
 }
