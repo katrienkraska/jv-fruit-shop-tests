@@ -13,18 +13,16 @@ public class FileReaderImpl implements FileRead {
     public List<String> read(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
-            throw new RuntimeException(
-                    "Error reading file at path : " + filePath);
+            throw new RuntimeException("Error reading file at path : " + filePath);
         }
         List<String> inputReport = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                inputReport.add(line);
+                inputReport.add(line.trim());
             }
         } catch (IOException e) {
-            throw new RuntimeException(
-                    "Error reading file at path : " + filePath, e);
+            throw new RuntimeException("Error reading file at path : " + filePath, e);
         }
         return inputReport;
     }
