@@ -2,6 +2,7 @@ package core.basesyntax.filereader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,7 +33,7 @@ class FileReaderImplTest {
     void read_emptyFile_returnsEmptyList() throws IOException {
         File tempFile = File.createTempFile("empty", ".csv");
         List<String> result = fileReader.read(tempFile.getPath());
-        assertEquals(0, result.size());
+        assertTrue(result.isEmpty());
         tempFile.deleteOnExit();
     }
 
@@ -59,18 +60,10 @@ class FileReaderImplTest {
         try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write("type,fruit,quantity   \n");
             writer.write("b,banana,20   \n");
-            writer.write("p,apple,10   \n");
         }
-
-        List<String> expected = List.of(
-                "type,fruit,quantity",
-                "b,banana,20",
-                "p,apple,10"
-        );
-
+        List<String> expected = List.of("type,fruit,quantity", "b,banana,20");
         List<String> actual = fileReader.read(tempFile.getPath());
         assertEquals(expected, actual);
-
         tempFile.deleteOnExit();
     }
 }
