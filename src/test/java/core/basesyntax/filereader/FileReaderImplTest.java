@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,26 @@ class FileReaderImplTest {
 
         List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void read_fileWithSpaces_trimsLines() throws IOException {
+        File tempFile = File.createTempFile("spaces", ".csv");
+        try (FileWriter writer = new FileWriter(tempFile)) {
+            writer.write("type,fruit,quantity   \n");
+            writer.write("b,banana,20   \n");
+            writer.write("p,apple,10   \n");
+        }
+
+        List<String> expected = List.of(
+                "type,fruit,quantity",
+                "b,banana,20",
+                "p,apple,10"
+        );
+
+        List<String> actual = fileReader.read(tempFile.getPath());
+        assertEquals(expected, actual);
+
+        tempFile.deleteOnExit();
     }
 }
