@@ -11,8 +11,6 @@ class FileReaderImplTest {
     private static FileReaderImpl fileReader;
     private static final String PATH_TO_REPORT_READ =
             "src/main/resources/reportToRead.csv";
-    private static final String PATH_TO_FINAL_READ =
-            "src/main/resources/finalReport.csv";
 
     @BeforeAll
     static void beforeAll() {
@@ -24,8 +22,7 @@ class FileReaderImplTest {
         String nonExistentFile = "non_existing_file.csv";
         RuntimeException exception = Assert.assertThrows(RuntimeException.class,
                 () -> fileReader.read(nonExistentFile));
-        Assert.assertTrue(exception.getMessage().contains(
-                "Error reading file at path : " + PATH_TO_FINAL_READ));
+        Assert.assertTrue(exception.getMessage().contains("File not found"));
     }
 
     @Test
@@ -38,15 +35,15 @@ class FileReaderImplTest {
     @Test
     void read_existingFile_ok() throws IOException {
         List<String> expected = List.of(
-                "    type,fruit,quantity",
-                "    b,banana,20",
-                "    b,apple,100",
-                "    s,banana,100",
-                "    p,banana,13",
-                "    r,apple,10",
-                "    p,apple,20",
-                "    p,banana,5",
-                "    s,banana,50"
+                "type,fruit,quantity",
+                "b,banana,20",
+                "b,apple,100",
+                "s,banana,100",
+                "p,banana,13",
+                "r,apple,10",
+                "p,apple,20",
+                "p,banana,5",
+                "s,banana,50"
         );
         List<String> actual = fileReader.read(PATH_TO_REPORT_READ);
         Assert.assertEquals(expected, actual);
