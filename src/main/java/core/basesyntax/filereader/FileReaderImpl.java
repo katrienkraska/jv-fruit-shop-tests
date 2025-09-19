@@ -20,11 +20,6 @@ public class FileReaderImpl implements FileRead {
         } catch (IOException e) {
             throw new RuntimeException("Error reading file at path :" + filePath);
         }
-
-        if (filePath.endsWith("finalReport.csv") && records.isEmpty()) {
-            throw new RuntimeException("Error reading file at path :" + filePath);
-        }
-
         return records;
     }
 }

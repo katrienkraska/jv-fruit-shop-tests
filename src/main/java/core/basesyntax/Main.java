@@ -1,4 +1,4 @@
-package core.basesyntax.strategy;
+package core.basesyntax;
 
 import core.basesyntax.converter.DataConverter;
 import core.basesyntax.converter.DataConverterImpl;
@@ -28,15 +28,12 @@ public class Main {
             "src/main/resources/finalReport.csv";
 
     public static void main(String[] arg) {
-        // 1. Зчитування даних із вхідного файлу CSV
         FileReaderImpl fileReader = new FileReaderImpl();
         List<String> inputReport = fileReader.read(PATH_TO_REPORT_READ);
 
-        // 2. Перетворення вхідних даних у список FruitTransactions
         DataConverter dataConverter = new DataConverterImpl();
         final List<FruitTransaction> transactions = dataConverter.convertToTransaction(inputReport);
 
-        // 3. Створюйте та відчувайте карту з усіма реалізаціями
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = new HashMap<>();
         operationHandlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
         operationHandlers.put(FruitTransaction.Operation.PURCHASE, new PurchaseOperation());
@@ -44,16 +41,13 @@ public class Main {
         operationHandlers.put(FruitTransaction.Operation.SUPPLY, new SupplyOperation());
         OperationStrategy operationStrategy = new OperationStrategyImpl(operationHandlers);
 
-        // 4. Обробляйте вхідні транзакції за допомогою відповідних реалізацій OperationHandler
         ShopService shopService = new ShopServiceImpl(operationStrategy);
         shopService.process(transactions);
 
-        // 5. Створення звіту на основі поточного стану зберігання
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
         String resultingReport = reportGenerator.getReport(((
                 ShopServiceImpl) shopService).getInventory());
 
-        // 6. Записати отриманий звіт у файл призначення
         FileWriter fileWriter = new FileWriterImpl();
         fileWriter.write(resultingReport, PATH_TO_FINAL_READ);
     }

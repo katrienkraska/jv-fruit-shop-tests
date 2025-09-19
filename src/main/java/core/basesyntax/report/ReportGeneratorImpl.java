@@ -1,21 +1,16 @@
 package core.basesyntax.report;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ReportGeneratorImpl implements ReportGenerator {
+    private static final String COMMA = ",";
 
     @Override
     public String getReport(Map<String, Integer> inventory) {
-        if (inventory.isEmpty()) {
-            return "";
-        }
-
-        Map<String, Integer> sortedInventory = new TreeMap<>(inventory);
         StringBuilder report = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : sortedInventory.entrySet()) {
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
             report.append(entry.getKey())
-                    .append(",")
+                    .append(COMMA)
                     .append(entry.getValue())
                     .append("\n");
         }

@@ -36,10 +36,10 @@ public class FruitTransaction {
     }
 
     public enum Operation {
-        BALANCE("b"), //залишки плодів
-        SUPPLY("s"), //поставка нових фруктів
-        PURCHASE("p"), //покупка клієнтів
-        RETURN("r"); //повернення клієнтів
+        BALANCE("b"),
+        SUPPLY("s"),
+        PURCHASE("p"),
+        RETURN("r");
 
         private String code;
 

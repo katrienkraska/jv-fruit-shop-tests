@@ -13,7 +13,7 @@ class DataConverterImplTest {
     @Test
     void convertToTransaction() {
         List<String> input = Arrays.asList(
-                " b,banana,20", " p,apple,20 ");
+                "b,banana,20", "p,apple,20");
         List<FruitTransaction> result = dataConverter.convertToTransaction(input);
         Assert.assertEquals(2, result.size());
         Assert.assertTrue(result.get(0).toString().contains("banana"));

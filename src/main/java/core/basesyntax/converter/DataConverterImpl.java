@@ -10,17 +10,17 @@ public class DataConverterImpl implements DataConverter {
     public List<FruitTransaction> convertToTransaction(List<String> inputReport) {
         List<FruitTransaction> transactions = new ArrayList<>();
         for (String line : inputReport) {
-            String[] parts = line.trim().split(",");
+            String[] parts = line.split(",");
             if (parts.length != 3) {
                 throw new IllegalArgumentException(
                         "Invalid line format: " + line);
             }
 
-            String operationCode = parts[0].trim();
-            String fruit = parts[1].trim();
+            String operationCode = parts[0];
+            String fruit = parts[1];
             int quantity;
             try {
-                quantity = Integer.parseInt(parts[2].trim());
+                quantity = Integer.parseInt(parts[2]);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(
                         "Invalid quantity in line: " + line);
