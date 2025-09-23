@@ -14,7 +14,9 @@ class ReportGeneratorImplTest {
         inventory.put("apple", 50);
         inventory.put("banana", 30);
 
-        String expected = "apple,50\nbanana,30\n";
+        String expected = "fruit,quantity" + System.lineSeparator()
+                + "apple,50" + System.lineSeparator()
+                + "banana,30" + System.lineSeparator();
         String result = reportGenerator.getReport(inventory);
         Assert.assertEquals(expected, result);
     }
