@@ -1,8 +1,10 @@
 package core.basesyntax.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import core.basesyntax.model.FruitTransaction;
 import java.util.Map;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 class OperationStrategyImplTest {
@@ -14,21 +16,21 @@ class OperationStrategyImplTest {
                 Map.of(FruitTransaction.Operation.BALANCE, balanceHandler));
         OperationHandler result = operationStrategy.getHandler(
                 FruitTransaction.Operation.BALANCE);
-        Assert.assertEquals(balanceHandler, result);
+        assertEquals(balanceHandler, result);
     }
 
     @Test
     void getHandler_invalidOperation_throwsException() {
         OperationStrategy operationStrategy = new OperationStrategyImpl(
                 Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation()));
-        Assert.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> operationStrategy.getHandler(
                         FruitTransaction.Operation.PURCHASE));
     }
 
     @Test
     void operationStrategyImpl_emptyMap_throwsException() {
-        Assert.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> new OperationStrategyImpl(Map.of()));
     }
 
@@ -36,7 +38,7 @@ class OperationStrategyImplTest {
     void getHandler_nullOperation_throwsException() {
         OperationStrategy operationStrategy = new OperationStrategyImpl(
                 Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation()));
-        Assert.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> operationStrategy.getHandler(null));
     }
 }

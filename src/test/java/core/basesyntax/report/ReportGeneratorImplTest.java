@@ -1,12 +1,19 @@
 package core.basesyntax.report;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.junit.Assert;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ReportGeneratorImplTest {
-    private final ReportGenerator reportGenerator = new ReportGeneratorImpl();
+    private static ReportGenerator reportGenerator;
+
+    @BeforeAll
+    static void beforeAll() {
+        reportGenerator = new ReportGeneratorImpl();
+    }
 
     @Test
     void getReport_validInventory_ok() {
@@ -18,12 +25,12 @@ class ReportGeneratorImplTest {
                 + "apple,50" + System.lineSeparator()
                 + "banana,30" + System.lineSeparator();
         String result = reportGenerator.getReport(inventory);
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
     void getReport_emptyInventory_returnsEmptyString() {
         String result = reportGenerator.getReport(new LinkedHashMap<>());
-        Assert.assertEquals("", result);
+        assertEquals("", result);
     }
 }
