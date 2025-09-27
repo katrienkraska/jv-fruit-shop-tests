@@ -8,10 +8,16 @@ import core.basesyntax.model.FruitTransaction;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class DataConverterImplTest {
-    private final DataConverter dataConverter = new DataConverterImpl();
+    private static DataConverter dataConverter = new DataConverterImpl();
+
+    @BeforeAll
+    static void setUp() {
+        dataConverter = new DataConverterImpl();
+    }
 
     @Test
     void convertToTransaction() {

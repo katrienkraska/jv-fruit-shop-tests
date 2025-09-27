@@ -19,7 +19,8 @@ class FileWriterImplTest {
     @Test
     void write_validFile_ok() throws Exception {
         File tempFile = File.createTempFile("output", ".csv");
-        String data = "line1\nline2\nline3";
+        String data = "line1" + System.lineSeparator()
+                + "line2" + System.lineSeparator() + "line3";
         fileWriter.write(data, tempFile.getPath());
         String result = Files.readString(tempFile.toPath());
         assertEquals(data, result);

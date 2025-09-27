@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class FileReaderImplTest {
     private static FileReaderImpl fileReader;
     private static final String PATH_TO_REPORT_READ =
-            "src/main/resources/reportToRead.csv";
+            "src/test/resources/reportToRead.csv";
 
     @BeforeAll
     static void beforeAll() {
@@ -58,8 +58,8 @@ class FileReaderImplTest {
     void read_fileWithSpaces_trimsLines() throws IOException {
         File tempFile = File.createTempFile("spaces", ".csv");
         try (FileWriter writer = new FileWriter(tempFile)) {
-            writer.write("type,fruit,quantity   \n");
-            writer.write("b,banana,20   \n");
+            writer.write("type,fruit,quantity" + System.lineSeparator());
+            writer.write("b,banana,20" + System.lineSeparator());
         }
         List<String> expected = List.of("type,fruit,quantity", "b,banana,20");
         List<String> actual = fileReader.read(tempFile.getPath());

@@ -5,15 +5,23 @@ import static org.junit.Assert.assertThrows;
 
 import core.basesyntax.model.FruitTransaction;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class OperationStrategyImplTest {
 
+    private OperationHandler balanceHandler;
+    private OperationStrategy operationStrategy;
+
+    @BeforeEach
+    void setUp() {
+        balanceHandler = new BalanceOperation();
+        operationStrategy = new OperationStrategyImpl(
+                Map.of(FruitTransaction.Operation.BALANCE, balanceHandler));
+    }
+
     @Test
     void getHandler_validOperation_ok() {
-        OperationHandler balanceHandler = new BalanceOperation();
-        OperationStrategy operationStrategy = new OperationStrategyImpl(
-                Map.of(FruitTransaction.Operation.BALANCE, balanceHandler));
         OperationHandler result = operationStrategy.getHandler(
                 FruitTransaction.Operation.BALANCE);
         assertEquals(balanceHandler, result);
@@ -21,11 +29,8 @@ class OperationStrategyImplTest {
 
     @Test
     void getHandler_invalidOperation_throwsException() {
-        OperationStrategy operationStrategy = new OperationStrategyImpl(
-                Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation()));
         assertThrows(IllegalArgumentException.class,
-                () -> operationStrategy.getHandler(
-                        FruitTransaction.Operation.PURCHASE));
+                () -> operationStrategy.getHandler(FruitTransaction.Operation.PURCHASE));
     }
 
     @Test
@@ -36,8 +41,6 @@ class OperationStrategyImplTest {
 
     @Test
     void getHandler_nullOperation_throwsException() {
-        OperationStrategy operationStrategy = new OperationStrategyImpl(
-                Map.of(FruitTransaction.Operation.BALANCE, new BalanceOperation()));
         assertThrows(IllegalArgumentException.class,
                 () -> operationStrategy.getHandler(null));
     }
